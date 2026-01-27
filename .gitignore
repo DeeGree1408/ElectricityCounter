@@ -1,14 +1,21 @@
-# 1. Переходим в папку проекта
-cd C:\deepseek\ElectricityCounter
+# Android Studio
+.idea/
+*.iml
+.gradle/
+build/
+local.properties
+.cxx/
+.externalNativeBuild/
 
-# 2. Создаём новый .gitignore
-echo ".idea/" > .gitignore
-echo "*.iml" >> .gitignore
-echo ".gradle/" >> .gitignore
-echo "build/" >> .gitignore
-echo "local.properties" >> .gitignore
-echo ".cxx/" >> .gitignore
-echo ".externalNativeBuild/" >> .gitignore
+# Gradle
+gradle/.idea/
+gradle-wrapper.properties
 
-# 3. Проверяем
-type .gitignore
+# Файлы ОС
+.DS_Store
+Thumbs.db
+
+# Временные файлы
+*.log
+*.tmp
+*.bak
