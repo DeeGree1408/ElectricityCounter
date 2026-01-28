@@ -1132,7 +1132,30 @@ fun RemindersScreen(onBack: () -> Unit) {
                                 Spacer(modifier = Modifier.padding(4.dp))
                                 Text("🔔 ТЕСТ УВЕДОМЛЕНИЯ")
                             }
-                            
+
+
+                            // 🔧 КНОПКА ТЕСТА ПРОВЕРКИ НАПОМИНАНИЙ
+                            Button(
+                                onClick = {
+                                    // Тестируем проверку напоминаний
+                                    ReminderChecker.testReminder(context)
+                                    Toast.makeText(
+                                        context,
+                                        "🧪 Тест проверки напоминаний\n" +
+                                                "Уведомление должно появиться",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                },
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color(0xFF17A2B8)
+                                )
+                            ) {
+                                Icon(Icons.Default.Info, contentDescription = null)
+                                Spacer(modifier = Modifier.padding(4.dp))
+                                Text("🧪 ТЕСТ ПРОВЕРКИ")
+                            }
+
                             // ИНФОРМАЦИЯ О ФАЙЛАХ
                             Text(
                                 text = "💡 Файл истории сохраняется в папке Downloads\nи отправляется на почту lbvsx@mail.ru",

@@ -24,4 +24,18 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+    
+    override fun onResume() {
+        super.onResume()
+        
+        // 🔧 ПРОВЕРЯЕМ НАПОМИНАНИЯ ПРИ КАЖДОМ ОТКРЫТИИ ПРИЛОЖЕНИЯ
+        ReminderChecker.checkAndShowReminder(this)
+    }
+    
+    override fun onStart() {
+        super.onStart()
+        
+        // 🔧 ДОПОЛНИТЕЛЬНАЯ ПРОВЕРКА ПРИ ЗАПУСКЕ
+        ReminderChecker.checkAndShowReminder(this)
+    }
 }
