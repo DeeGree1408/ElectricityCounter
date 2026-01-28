@@ -18,30 +18,11 @@ class ReminderScheduler(private val context: Context) {
     }
     
     fun scheduleMonthlyReminder() {
-        cancelAllReminders() // Отменяем все старые напоминания
-        
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        
-        // 1. Планируем первое напоминание на 24 число в 12:00
-        val firstReminderDate = getNext24thDate()
-        
-        val firstIntent = Intent(context, ReminderReceiver::class.java).apply {
-            putExtra("reminder_type", "first")
-        }
-        val firstPendingIntent = PendingIntent.getBroadcast(
-            context,
-            REQUEST_CODE_24TH,
-            firstIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-        
-        setExactAlarm(alarmManager, firstReminderDate.timeInMillis, firstPendingIntent)
-        
-        // Для отладки
-        val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+        // 🔧 НОВАЯ СИСТЕМА: только включаем флаг, не планируем AlarmManager
         Toast.makeText(
             context,
-            "📅 Напоминание запланировано на: ${sdf.format(firstReminderDate.time)}",
+            "✅ Напоминания включены!\n" +
+            "Проверка будет при каждом открытии приложения",
             Toast.LENGTH_LONG
         ).show()
     }
@@ -75,28 +56,8 @@ class ReminderScheduler(private val context: Context) {
     }
     
     fun scheduleNextDayReminder() {
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        
-        // Планируем следующее напоминание на завтра в 12:00
-        val tomorrow = Calendar.getInstance().apply {
-            add(Calendar.DAY_OF_MONTH, 1)
-            set(Calendar.HOUR_OF_DAY, 12)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }
-        
-        val dailyIntent = Intent(context, ReminderReceiver::class.java).apply {
-            putExtra("reminder_type", "daily")
-        }
-        val dailyPendingIntent = PendingIntent.getBroadcast(
-            context,
-            REQUEST_CODE_DAILY,
-            dailyIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-        
-        setExactAlarm(alarmManager, tomorrow.timeInMillis, dailyPendingIntent)
+        // 🔧 НОВАЯ СИСТЕМА: ничего не делаем
+        // Уведомления будут показываться при открытии приложения
     }
     
     private fun setExactAlarm(alarmManager: AlarmManager, triggerTime: Long, pendingIntent: PendingIntent) {
@@ -122,27 +83,8 @@ class ReminderScheduler(private val context: Context) {
     }
     
     fun cancelAllReminders() {
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        
-        // Отменяем первое напоминание
-        val firstIntent = Intent(context, ReminderReceiver::class.java)
-        val firstPendingIntent = PendingIntent.getBroadcast(
-            context,
-            REQUEST_CODE_24TH,
-            firstIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-        alarmManager.cancel(firstPendingIntent)
-        
-        // Отменяем ежедневные напоминания
-        val dailyIntent = Intent(context, ReminderReceiver::class.java)
-        val dailyPendingIntent = PendingIntent.getBroadcast(
-            context,
-            REQUEST_CODE_DAILY,
-            dailyIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-        alarmManager.cancel(dailyPendingIntent)
+        // 🔧 НОВАЯ СИСТЕМА: просто отключаем
+        Toast.makeText(context, "🔕 Напоминания выключены", Toast.LENGTH_SHORT).show()
     }
     
     fun wereReadingsSubmittedThisMonth(): Boolean {
